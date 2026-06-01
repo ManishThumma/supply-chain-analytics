@@ -1,13 +1,7 @@
 import sys
 from pathlib import Path
 
-# Walk up from this file until we find the repo root (directory containing src/)
-_here = Path(__file__).resolve()
-for _parent in [_here.parent, _here.parent.parent, _here.parent.parent.parent]:
-    if (_parent / "src").exists():
-        if str(_parent) not in sys.path:
-            sys.path.insert(0, str(_parent))
-        break
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
 from src.data_loader import load_data
@@ -16,7 +10,6 @@ from src.feature_engineering import (
     flag_late_orders,
     compute_order_profitability_tier,
     encode_categoricals,
-    add_predictive_features,
 )
 
 st.set_page_config(
@@ -43,31 +36,11 @@ def get_data():
     df = flag_late_orders(df)
     df = compute_order_profitability_tier(df)
     df = encode_categoricals(df)
-    df = add_predictive_features(df)
     return df
-
-
-@st.cache_resource(show_spinner="Training risk model...")
-def get_model(n_rows):
-    from lightgbm import LGBMClassifier
-    from sklearn.model_selection import train_test_split
-    from src.model_utils import FEATURES
-    df = get_data()
-    X = df[FEATURES]
-    y = df["late_delivery_risk"]
-    X_train, _, y_train, _ = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    model = LGBMClassifier(
-        n_estimators=400, learning_rate=0.05, max_depth=6,
-        num_leaves=40, class_weight="balanced", random_state=42,
-        n_jobs=-1, verbose=-1,
-    )
-    model.fit(X_train, y_train)
-    return model
 
 
 df = get_data()
 st.session_state["df"] = df
-st.session_state["model"] = get_model(len(df))
 
 st.title("📦 Supply Chain Performance Analytics")
 st.markdown("**DataCo Global Operations · 180,519 Orders · Jan 2015 – Jan 2018**")

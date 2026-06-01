@@ -1,13 +1,6 @@
 import sys
 from pathlib import Path
-
-# Walk up from this file until we find the repo root (directory containing src/)
-_here = Path(__file__).resolve()
-for _parent in [_here.parent, _here.parent.parent, _here.parent.parent.parent]:
-    if (_parent / "src").exists():
-        if str(_parent) not in sys.path:
-            sys.path.insert(0, str(_parent))
-        break
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 import streamlit as st
 import pandas as pd
@@ -23,17 +16,26 @@ warnings.filterwarnings("ignore")
 from sklearn.metrics import roc_curve, auc
 from sklearn.model_selection import train_test_split
 
-from src.model_utils import get_model_metrics, predict_single_order, FEATURES
+from src.model_utils import load_risk_model, get_model_metrics, predict_single_order, FEATURES
 
 st.set_page_config(page_title="Risk Scoring", layout="wide")
 st.title("🔴 Late Delivery Risk Scoring")
-st.markdown("LightGBM classifier trained on pre-shipment features — no leakers. AUC 0.7367 on 36K held-out orders.")
+st.markdown("LightGBM classifier trained on pre-shipment features — no leakers. AUC 0.73 on 36K held-out orders.")
 st.markdown("---")
 
 df = st.session_state.get("df")
-model = st.session_state.get("model")
-if df is None or model is None:
+if df is None:
     st.warning("⚠️ Return to the Home page to load the data first.")
+    st.stop()
+
+@st.cache_resource(show_spinner="Loading model...")
+def load_model_cached():
+    return load_risk_model()
+
+try:
+    model = load_model_cached()
+except FileNotFoundError:
+    st.error("Model file not found. Run notebook 05 to train and save the model first.")
     st.stop()
 
 X = df[FEATURES]

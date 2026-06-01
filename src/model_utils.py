@@ -18,12 +18,6 @@ FEATURES = [
     "order_quantity",
     "sales",
     "days_shipping_scheduled",
-    "shipping_mode_market",
-    "order_month",
-    "order_dayofweek",
-    "is_holiday_period",
-    "order_value_bin",
-    "scheduled_x_value",
 ]
 
 MODEL_PATH = Path("models/lgbm_late_delivery.pkl")
