@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import pandas as pd
 from pathlib import Path
@@ -54,7 +56,7 @@ def load_data(path: str | Path = "data/dataco_supply_chain.csv") -> pd.DataFrame
 
     for raw_col, new_name in DATE_COLUMNS.items():
         if raw_col in df.columns:
-            df[new_name] = pd.to_datetime(df[raw_col], infer_datetime_format=True, errors="coerce")
+            df[new_name] = pd.to_datetime(df[raw_col], errors="coerce")
             df.drop(columns=[raw_col], inplace=True)
 
     rename_map = {k: v for k, v in COLUMN_RENAMES.items() if k in df.columns}

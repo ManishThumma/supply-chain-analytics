@@ -59,10 +59,12 @@ def train_risk_model(df: pd.DataFrame):
     logger.info("Model saved to %s", MODEL_PATH)
 
     explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(X_test)
-    # LightGBM binary: shap_values is a list [neg_class, pos_class]
-    if isinstance(shap_values, list):
-        shap_values = shap_values[1]
+    raw = explainer.shap_values(X_test)
+    # LightGBM binary returns either a list [neg, pos] or a single 2D array
+    if isinstance(raw, list):
+        shap_values = raw[1]
+    else:
+        shap_values = raw
 
     return model, X_test, y_test, shap_values
 

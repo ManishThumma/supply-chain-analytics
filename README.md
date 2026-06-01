@@ -88,7 +88,7 @@ streamlit run app.py
 - **Standard Class shipping drives the majority of late deliveries** — it accounts for the highest order volume and consistently underperforms its scheduled SLA window, making it the highest-priority target for carrier renegotiation.
 - **Latin America and Pacific Asia markets show structurally elevated late delivery rates** regardless of shipping mode, suggesting last-mile infrastructure constraints rather than carrier selection issues.
 - **Roughly 20–25% of orders are loss-generating** at the order level, concentrated in specific product categories that are frequently shipped via premium modes — a mode-shift policy alone could recover meaningful margin.
-- **The LightGBM risk classifier achieves AUC > 0.85** using only pre-shipment features, confirming that late delivery risk is largely predictable at the point of order fulfilment — before any carrier handoff occurs.
+- **The LightGBM risk classifier achieves AUC of 0.73** using only pre-shipment features (no leakers), confirming that a meaningful portion of late delivery risk is predictable at the point of order fulfilment — before any carrier handoff occurs.
 - **Scheduled delivery days is a stronger risk signal than order value** — carriers appear to treat longer lead-time commitments as lower priority, which compounds SLA risk on orders already flagged as non-urgent.
 
 ## Skills Demonstrated
