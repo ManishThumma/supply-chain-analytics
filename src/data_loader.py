@@ -39,14 +39,26 @@ COLUMN_RENAMES = {
     "Order Status": "order_status",
 }
 
+_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-def load_data(path: str | Path = "data/dataco_supply_chain.csv") -> pd.DataFrame:
+
+def load_data(path: str | Path | None = None) -> pd.DataFrame:
+    if path is None:
+        parquet = _DATA_DIR / "dataco_supply_chain.parquet"
+        csv = _DATA_DIR / "dataco_supply_chain.csv"
+        path = parquet if parquet.exists() else csv
+
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(
             f"Dataset not found at {path}. "
             "Download DataCo Smart Supply Chain from Kaggle and place it in /data."
         )
+
+    if path.suffix == ".parquet":
+        df = pd.read_parquet(path)
+        logger.info("Loaded %d rows from %s", len(df), path.name)
+        return df
 
     df = pd.read_csv(path, encoding="latin-1", low_memory=False)
     logger.info("Loaded %d rows, %d columns from %s", len(df), df.shape[1], path)

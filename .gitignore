@@ -1,11 +1,20 @@
-data/
-models/
+# raw CSV (too large for git — use the parquet in /data instead)
+data/*.csv
+
+# secrets — never commit
+.env
+.streamlit/secrets.toml
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
-.ipynb_checkpoints/
 *.egg-info/
 dist/
 build/
-.env
+
+# notebooks
+.ipynb_checkpoints/
+
+# OS
 .DS_Store
