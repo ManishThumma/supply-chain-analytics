@@ -20,11 +20,7 @@ A few questions drove this project:
 
 [Download here](https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis)
 
-Place the downloaded CSV at:
-
-```
-supply-chain-analytics/data/dataco_supply_chain.csv
-```
+The cleaned dataset is included in this repo as a parquet file (`data/dataco_supply_chain.parquet`) — no setup needed to run the dashboard or notebooks. If you want to re-run the full cleaning pipeline from scratch, download the raw CSV from Kaggle and the `data_loader.py` will pick it up automatically.
 
 **Dataset at a glance:**
 - 180,519 orders
@@ -40,9 +36,9 @@ supply-chain-analytics/data/dataco_supply_chain.csv
 ```
 supply-chain-analytics/
 ├── data/
-│   └── dataco_supply_chain.csv
+│   └── dataco_supply_chain.parquet      ← cleaned data, ready to use
 ├── models/
-│   └── lgbm_late_delivery.pkl        ← trained after running notebook 05
+│   └── lgbm_late_delivery.pkl           ← trained LightGBM classifier
 ├── notebooks/
 │   ├── 01_eda_and_cleaning.ipynb
 │   ├── 02_delivery_performance.ipynb
@@ -101,19 +97,15 @@ conda activate supply-chain
 pip install -r requirements.txt
 ```
 
-**2. Add the dataset**
-
-Download from Kaggle and place at `data/dataco_supply_chain.csv`.
-
-**3. Run notebooks in order**
+**2. Run notebooks** (optional — model and data already included)
 
 ```bash
 jupyter notebook
 ```
 
-Run 01 through 05 in sequence. Notebook 05 trains and saves the model.
+Run 01 through 05 in sequence if you want to re-run the full analysis. Notebook 05 retrains and saves the model.
 
-**4. Launch the dashboard**
+**3. Launch the dashboard**
 
 ```bash
 cd streamlit_app
@@ -140,4 +132,4 @@ streamlit run app.py
 **Manish Thumma** — Data Analyst
 
 - GitHub: [github.com/ManishThumma](https://github.com/ManishThumma)
-- LinkedIn: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+- LinkedIn: [linkedin.com/in/balamanishreddythumma](https://www.linkedin.com/in/balamanishreddythumma)
