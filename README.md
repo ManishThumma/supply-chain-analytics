@@ -76,4 +76,3 @@ Python · pandas · LightGBM · SHAP · scikit-learn · Plotly · Streamlit · M
 **Manish Thumma** — Business Data Analyst
 
 - LinkedIn: [linkedin.com/in/balamanishreddythumma](https://www.linkedin.com/in/balamanishreddythumma)
-- GitHub: [github.com/ManishThumma](https://github.com/ManishThumma)
