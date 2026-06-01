@@ -1,7 +1,12 @@
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+_here = Path(__file__).resolve()
+for _parent in [_here.parent, _here.parent.parent, _here.parent.parent.parent]:
+    if (_parent / "src").exists():
+        if str(_parent) not in sys.path:
+            sys.path.insert(0, str(_parent))
+        break
 
 import streamlit as st
 from src.data_loader import load_data
