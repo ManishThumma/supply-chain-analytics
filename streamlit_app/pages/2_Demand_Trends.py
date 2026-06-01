@@ -48,7 +48,7 @@ fig1.add_scatter(x=daily["order_date"], y=daily["ma30"], mode="lines",
 fig1.add_scatter(x=daily["order_date"], y=daily["ma90"], mode="lines",
                  name="90-Day MA", line=dict(color="#6BAB8A", width=2.5))
 fig1.update_layout(title="Daily Order Volume with Rolling Averages",
-                   yaxis_title="Units Ordered", plot_bgcolor="white", height=380,
+                   yaxis_title="Units Ordered", plot_bgcolor="rgba(0,0,0,0)", height=380,
                    legend=dict(orientation="h", y=1.1))
 st.plotly_chart(fig1, use_container_width=True)
 
@@ -85,7 +85,7 @@ with col2:
             color_continuous_midpoint=0,
             labels={"growth": "YoY Growth (%)", "department_name": ""},
         )
-        fig3.update_layout(plot_bgcolor="white", showlegend=False,
+        fig3.update_layout(plot_bgcolor="rgba(0,0,0,0)", showlegend=False,
                            coloraxis_showscale=False, height=480)
         fig3.add_vline(x=0, line_dash="dash", line_color="gray", line_width=1)
         st.plotly_chart(fig3, use_container_width=True)

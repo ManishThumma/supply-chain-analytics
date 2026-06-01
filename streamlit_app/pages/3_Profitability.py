@@ -70,7 +70,7 @@ with c1:
                   labels={"avg_profit": "Avg Profit ($)", "category_name": ""},
                   text="avg_profit")
     fig3.update_traces(texttemplate="$%{text:.2f}", textposition="outside")
-    fig3.update_layout(plot_bgcolor="white", height=380)
+    fig3.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=380)
     st.plotly_chart(fig3, use_container_width=True)
 
 with c2:
@@ -81,7 +81,7 @@ with c2:
                   labels={"avg_profit": "Avg Profit ($)", "category_name": ""},
                   text="avg_profit")
     fig4.update_traces(texttemplate="$%{text:.2f}", textposition="outside")
-    fig4.update_layout(plot_bgcolor="white", height=380)
+    fig4.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=380)
     fig4.add_vline(x=0, line_dash="dash", line_color="gray")
     st.plotly_chart(fig4, use_container_width=True)
 

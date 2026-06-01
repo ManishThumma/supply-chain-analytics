@@ -60,7 +60,7 @@ with tab1:
             title=f"ROC Curve (AUC = {roc_auc:.4f})",
             xaxis_title="False Positive Rate",
             yaxis_title="True Positive Rate",
-            plot_bgcolor="white", height=400,
+            plot_bgcolor="rgba(0,0,0,0)", height=400,
             legend=dict(orientation="h", y=1.1)
         )
         st.plotly_chart(fig_roc, use_container_width=True)

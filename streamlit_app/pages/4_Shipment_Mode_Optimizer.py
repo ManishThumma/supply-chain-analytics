@@ -45,7 +45,7 @@ with col1:
         text="avg_cost",
     )
     fig1.update_traces(texttemplate="$%{text:.2f}", textposition="outside")
-    fig1.update_layout(showlegend=False, plot_bgcolor="white", height=360)
+    fig1.update_layout(showlegend=False, plot_bgcolor="rgba(0,0,0,0)", height=360)
     st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
@@ -59,7 +59,7 @@ with col2:
         text="avg_delay",
     )
     fig2.update_traces(texttemplate="%{text:.2f}d", textposition="outside")
-    fig2.update_layout(showlegend=False, plot_bgcolor="white", height=360)
+    fig2.update_layout(showlegend=False, plot_bgcolor="rgba(0,0,0,0)", height=360)
     fig2.add_hline(y=0, line_dash="dash", line_color="gray", line_width=1)
     st.plotly_chart(fig2, use_container_width=True)
 
@@ -74,7 +74,7 @@ with col3:
         text=mode_summary["late_rate"].mul(100).round(1),
     )
     fig3.update_traces(texttemplate="%{text}%", textposition="outside")
-    fig3.update_layout(showlegend=False, plot_bgcolor="white", height=360)
+    fig3.update_layout(showlegend=False, plot_bgcolor="rgba(0,0,0,0)", height=360)
     st.plotly_chart(fig3, use_container_width=True)
 
 sample = dfc.sample(min(8000, len(dfc)), random_state=42)
@@ -87,7 +87,7 @@ fig4 = px.scatter(
     color_discrete_sequence=["#4A6FA5","#E8735A","#6BAB8A","#F5B942"],
 )
 fig4.add_hline(y=0, line_dash="dash", line_color="gray", line_width=1)
-fig4.update_layout(plot_bgcolor="white", height=380)
+fig4.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=380)
 st.plotly_chart(fig4, use_container_width=True)
 
 st.markdown("### When to Use Each Mode")

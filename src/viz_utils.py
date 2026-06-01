@@ -39,7 +39,7 @@ def plot_on_time_rate_by_mode(df: pd.DataFrame) -> go.Figure:
         yaxis_title="% of Orders",
         xaxis_title="Shipping Mode",
         legend=dict(orientation="h", y=1.1),
-        plot_bgcolor="white",
+        plot_bgcolor="rgba(0,0,0,0)",
     )
     return fig
 
@@ -74,7 +74,7 @@ def plot_monthly_order_volume(df: pd.DataFrame) -> go.Figure:
         title="Daily Order Volume with Rolling Averages",
         yaxis_title="Order Quantity",
         xaxis_title="Date",
-        plot_bgcolor="white",
+        plot_bgcolor="rgba(0,0,0,0)",
     )
     return fig
 
@@ -107,6 +107,7 @@ def plot_profit_by_segment_region(df: pd.DataFrame) -> go.Figure:
 
 
 def plot_shap_summary(shap_values: np.ndarray, X_test: pd.DataFrame) -> plt.Figure:
+    plt.style.use("dark_background")
     fig, ax = plt.subplots(figsize=(10, 6))
     shap.summary_plot(
         shap_values,
@@ -116,5 +117,6 @@ def plot_shap_summary(shap_values: np.ndarray, X_test: pd.DataFrame) -> plt.Figu
         color_bar=True,
     )
     fig = plt.gcf()
+    fig.patch.set_facecolor("#0e1117")
     fig.tight_layout()
     return fig

@@ -59,7 +59,7 @@ with col2:
         color_discrete_sequence=["#4A6FA5"],
     )
     fig2.update_traces(line_width=2.5)
-    fig2.update_layout(plot_bgcolor="white", height=380)
+    fig2.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=380)
     st.plotly_chart(fig2, use_container_width=True)
 
 # Market late rate bar
@@ -78,7 +78,7 @@ fig3 = px.bar(
     text="late_pct",
 )
 fig3.update_traces(texttemplate="%{text}%", textposition="outside")
-fig3.update_layout(plot_bgcolor="white", showlegend=False, coloraxis_showscale=False, height=320)
+fig3.update_layout(plot_bgcolor="rgba(0,0,0,0)", showlegend=False, coloraxis_showscale=False, height=320)
 st.plotly_chart(fig3, use_container_width=True)
 
 # Top 10 states
@@ -94,7 +94,7 @@ fig4 = px.bar(
     color_discrete_sequence=["#E8735A"],
     labels={"late_count": "Late Orders", "customer_state": ""},
 )
-fig4.update_layout(plot_bgcolor="white", height=340)
+fig4.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=340)
 st.plotly_chart(fig4, use_container_width=True)
 
 st.info(
