@@ -1,6 +1,13 @@
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
+# Walk up from this file until we find the repo root (directory containing src/)
+_here = Path(__file__).resolve()
+for _parent in [_here.parent, _here.parent.parent, _here.parent.parent.parent]:
+    if (_parent / "src").exists():
+        if str(_parent) not in sys.path:
+            sys.path.insert(0, str(_parent))
+        break
 
 import streamlit as st
 import pandas as pd
