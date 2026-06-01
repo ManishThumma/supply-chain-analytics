@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 from sklearn.metrics import roc_curve, auc
 from sklearn.model_selection import train_test_split
 
-from src.model_utils import load_risk_model, get_model_metrics, predict_single_order, FEATURES
+from src.model_utils import get_model_metrics, predict_single_order, FEATURES
 
 st.set_page_config(page_title="Risk Scoring", layout="wide")
 st.title("🔴 Late Delivery Risk Scoring")
@@ -31,18 +31,9 @@ st.markdown("LightGBM classifier trained on pre-shipment features — no leakers
 st.markdown("---")
 
 df = st.session_state.get("df")
-if df is None:
+model = st.session_state.get("model")
+if df is None or model is None:
     st.warning("⚠️ Return to the Home page to load the data first.")
-    st.stop()
-
-@st.cache_resource(show_spinner="Loading model...")
-def load_model_cached():
-    return load_risk_model()
-
-try:
-    model = load_model_cached()
-except FileNotFoundError:
-    st.error("Model file not found. Run notebook 05 to train and save the model first.")
     st.stop()
 
 X = df[FEATURES]
