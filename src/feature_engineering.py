@@ -26,6 +26,27 @@ def compute_order_profitability_tier(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def add_predictive_features(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    le = LabelEncoder()
+    df["shipping_mode_market"] = le.fit_transform(
+        df["shipping_mode"].astype(str) + "_" + df["market"].astype(str)
+    )
+
+    df["order_month"] = df["order_date"].dt.month
+    df["order_dayofweek"] = df["order_date"].dt.dayofweek
+    df["is_holiday_period"] = df["order_month"].isin([11, 12]).astype(int)
+
+    df["order_value_bin"] = pd.qcut(
+        df["sales"], q=3, labels=[0, 1, 2], duplicates="drop"
+    ).astype(int)
+
+    df["scheduled_x_value"] = df["days_shipping_scheduled"] * df["order_value_bin"]
+
+    return df
+
+
 def encode_categoricals(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     encode_cols = ["shipping_mode", "market", "customer_segment", "category_name"]

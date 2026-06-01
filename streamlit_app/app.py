@@ -10,6 +10,7 @@ from src.feature_engineering import (
     flag_late_orders,
     compute_order_profitability_tier,
     encode_categoricals,
+    add_predictive_features,
 )
 
 st.set_page_config(
@@ -36,6 +37,7 @@ def get_data():
     df = flag_late_orders(df)
     df = compute_order_profitability_tier(df)
     df = encode_categoricals(df)
+    df = add_predictive_features(df)
     return df
 
 

@@ -20,7 +20,7 @@ from src.model_utils import load_risk_model, get_model_metrics, predict_single_o
 
 st.set_page_config(page_title="Risk Scoring", layout="wide")
 st.title("🔴 Late Delivery Risk Scoring")
-st.markdown("LightGBM classifier trained on pre-shipment features — no leakers. AUC 0.73 on 36K held-out orders.")
+st.markdown("LightGBM classifier trained on pre-shipment features — no leakers. AUC 0.7367 on 36K held-out orders.")
 st.markdown("---")
 
 df = st.session_state.get("df")

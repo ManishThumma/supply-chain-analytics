@@ -61,7 +61,7 @@ Average profit per order was $21.97, but 19.4% of orders were loss-generating an
 
 **Late Delivery Risk Model**
 
-AUC of 0.73 on 36,104 held-out orders using pre-shipment features only. Scheduled delivery days and shipping mode were the two strongest predictors by SHAP value. The finding: carriers appear to treat longer lead-time commitments as lower priority, so the buffer time built into longer scheduled windows gets eroded before the shipment even moves. The model is deployed in the dashboard's Risk Scoring page for live per-order prediction.
+AUC of 0.7367 on 36,104 held-out orders using pre-shipment features only. Scheduled delivery days and shipping mode were the two strongest predictors by SHAP value. The finding: carriers appear to treat longer lead-time commitments as lower priority, so the buffer time built into longer scheduled windows gets eroded before the shipment even moves. The model is deployed in the dashboard's Risk Scoring page for live per-order prediction.
 
 ---
 
