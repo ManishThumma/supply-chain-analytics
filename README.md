@@ -1,7 +1,7 @@
 # Supply Chain Performance Analytics
 ### Delivery, Demand & Profitability Intelligence across 180K+ Global Orders
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://manish-supply-chain-analytics.streamlit.app)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://manish-supply-chain-analytics.streamlit.app)
 
 ---
 
