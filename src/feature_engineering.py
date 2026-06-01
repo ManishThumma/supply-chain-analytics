@@ -40,7 +40,7 @@ def add_predictive_features(df: pd.DataFrame) -> pd.DataFrame:
 
     df["order_value_bin"] = pd.qcut(
         df["sales"], q=3, labels=[0, 1, 2], duplicates="drop"
-    ).astype(int)
+    ).cat.codes.clip(lower=0)
 
     df["scheduled_x_value"] = df["days_shipping_scheduled"] * df["order_value_bin"]
 
