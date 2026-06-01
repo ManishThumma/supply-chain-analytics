@@ -48,7 +48,7 @@ with col1:
 
 with col2:
     monthly = (
-        fdf.set_index("order_date").resample("M")["is_late"]
+        fdf.set_index("order_date").resample("ME")["is_late"]
         .mean().mul(100).reset_index()
         .rename(columns={"is_late": "late_pct"})
     )

@@ -75,7 +75,7 @@ with col2:
     yoy = fdf.groupby(["department_name", "year"])["order_quantity"].sum().unstack("year")
     years = sorted(yoy.columns)
     if len(years) >= 2:
-        yoy["growth"] = ((yoy[years[-2]] - yoy[years[-3]]) / yoy[years[-3]] * 100).round(1) if len(years) >= 3 else ((yoy[years[-1]] - yoy[years[-2]]) / yoy[years[-2]] * 100).round(1)
+        yoy["growth"] = ((yoy[years[-1]] - yoy[years[-2]]) / yoy[years[-2]] * 100).round(1)
         yoy_plot = yoy["growth"].dropna().sort_values().reset_index()
         fig3 = px.bar(
             yoy_plot, x="growth", y="department_name", orientation="h",
