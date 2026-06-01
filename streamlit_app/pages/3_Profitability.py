@@ -85,8 +85,15 @@ with c2:
     fig4.add_vline(x=0, line_dash="dash", line_color="gray")
     st.plotly_chart(fig4, use_container_width=True)
 
+best_cat  = cat_profit.iloc[-1]
+worst_cat = cat_profit.iloc[0]
+loss_pct  = (fdf["order_profit"] < 0).mean()
+avg_profit = fdf["order_profit"].mean()
+
 st.info(
-    "**Takeaway:** Computers average $157.59 profit per order — by far the highest. CDs, Toys, and Books "
-    "sit under $3. Before cutting low-margin categories, check whether they're using expensive shipping modes — "
-    "a mode-shift policy on those SKUs may recover margin without touching pricing or range."
+    f"**Takeaway:** Average profit per order in this selection is **${avg_profit:.2f}**, with {loss_pct:.1%} of orders loss-generating. "
+    f"{best_cat['category_name']} leads at ${best_cat['avg_profit']:.2f} avg profit per order; "
+    f"{worst_cat['category_name']} sits at the bottom at ${worst_cat['avg_profit']:.2f}. "
+    f"Before cutting low-margin categories, check whether they're being shipped via expensive modes — "
+    f"a mode-shift policy alone may recover margin without touching pricing or range."
 )

@@ -110,9 +110,16 @@ for _, row in mode_summary.iterrows():
 
 st.dataframe(pd.DataFrame(mode_rows), use_container_width=True, hide_index=True)
 
+cheapest = mode_summary.loc[mode_summary["avg_cost"].idxmin(), "shipping_mode"]
+most_reliable = mode_summary.loc[mode_summary["late_rate"].idxmin(), "shipping_mode"]
+most_reliable_rate = mode_summary["late_rate"].min()
+highest_value_mode = mode_summary.loc[mode_summary["avg_value"].idxmax(), "shipping_mode"]
+highest_value = mode_summary["avg_value"].max()
+
 st.info(
-    "**Takeaway:** Same Day and First Class cost more but underdeliver less. "
-    "Standard Class has the lowest late rate (38.1%) but that's partly because it carries the most orders "
-    "and has more relaxed SLA windows. The real question is matching mode to order value — "
-    "shipping a $10 book Same Day kills the margin on that order entirely."
+    f"**Takeaway:** {cheapest} has the lowest estimated shipping cost. "
+    f"{most_reliable} has the best on-time rate at {most_reliable_rate:.1%}. "
+    f"{highest_value_mode} carries the highest average order value (${highest_value:.2f}), "
+    f"which justifies its cost premium. The core question is matching mode to order value — "
+    f"putting a low-margin order on an expensive mode wipes the profit entirely."
 )

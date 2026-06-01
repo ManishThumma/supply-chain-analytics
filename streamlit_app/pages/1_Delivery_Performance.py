@@ -97,9 +97,16 @@ fig4 = px.bar(
 fig4.update_layout(plot_bgcolor="rgba(0,0,0,0)", height=340)
 st.plotly_chart(fig4, use_container_width=True)
 
+worst_mode = fdf.groupby("shipping_mode")["is_late"].mean().idxmax()
+best_mode  = fdf.groupby("shipping_mode")["is_late"].mean().idxmin()
+worst_market = fdf.groupby("market")["is_late"].mean().idxmax()
+market_range = fdf.groupby("market")["is_late"].mean()
+market_spread = (market_range.max() - market_range.min()) * 100
+
 st.info(
-    f"**Takeaway:** Within the current selection, {fdf['is_late'].mean():.1%} of orders were late. "
-    "Late delivery rates are surprisingly consistent across markets (54–55%), which suggests this isn't "
-    "a regional carrier problem — it's a systemic SLA misalignment. Standard Class has the lowest late rate "
-    "despite carrying the highest volume, while First Class and Second Class underperform their premium positioning."
+    f"**Takeaway:** {fdf['is_late'].mean():.1%} of orders in this selection were late. "
+    f"{worst_mode} has the highest late rate while {best_mode} performs best. "
+    f"Across markets, the spread between best and worst is only {market_spread:.1f} percentage points — "
+    f"{worst_market} leads in late rate but the consistency across markets points to a network-wide SLA issue "
+    f"rather than a regional carrier problem."
 )

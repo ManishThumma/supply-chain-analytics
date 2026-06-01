@@ -90,8 +90,20 @@ with col2:
         fig3.add_vline(x=0, line_dash="dash", line_color="gray", line_width=1)
         st.plotly_chart(fig3, use_container_width=True)
 
+top_dept = fdf.groupby("department_name")["order_quantity"].sum().idxmax()
+top_dept_vol = fdf.groupby("department_name")["order_quantity"].sum().max()
+top_cat = (
+    fdf.assign(month=fdf["order_date"].dt.month)
+    .groupby(["category_name", "month"])["order_quantity"].sum()
+    .unstack("month").fillna(0)
+    .assign(q4=lambda x: x.get(10, 0) + x.get(11, 0) + x.get(12, 0))
+    .sort_values("q4", ascending=False)
+    .index[0]
+)
+
 st.info(
-    "**Takeaway:** Fan Shop and Golf dominate order volume. Categories with Q4 spikes (months 10–12) "
-    "should be flagged for early inventory pre-positioning. Departments with negative YoY figures "
-    "may reflect partial-year data rather than structural decline — worth verifying coverage before acting on it."
+    f"**Takeaway:** {top_dept} is the highest-volume department in this selection with {top_dept_vol:,.0f} units ordered. "
+    f"{top_cat} shows the strongest Q4 concentration — worth flagging for early inventory pre-positioning. "
+    f"Departments with negative YoY figures may reflect partial-year data rather than structural decline; "
+    f"check date coverage before treating it as a trend."
 )
