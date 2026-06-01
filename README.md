@@ -32,7 +32,7 @@ An end-to-end analytics pipeline in Python — data cleaning, feature engineerin
 - `02` — Delivery performance breakdown by shipping mode, market, and geography
 - `03` — Demand trend analysis with rolling averages, category seasonality, and YoY growth by department
 - `04` — Order-level profitability by tier, segment, market, and product category
-- `05` — Late delivery risk model: LightGBM classifier with engineered features, SHAP attribution, AUC-ROC evaluation
+- `05` — Late delivery risk model: LightGBM classifier, SHAP attribution, AUC-ROC evaluation
 
 **Dashboard Pages**
 - Delivery Performance — OTIF rates by mode, market, and state with dynamic date and market filters
@@ -47,20 +47,9 @@ All filter selections update the charts and the insight callout at the bottom of
 
 ## Approach
 
-The data pipeline is built in `src/` — a `data_loader` that handles encoding, date parsing, and PII removal; a `feature_engineering` module that computes delivery delta, cross-validates the late delivery flag, bins profit tiers, label-encodes categoricals, and engineers additional predictive features; and a `viz_utils` layer of reusable Plotly and Matplotlib functions shared across notebooks and the dashboard.
+The data pipeline is built in `src/` — a `data_loader` that handles encoding, date parsing, and PII removal; a `feature_engineering` module that computes delivery delta, cross-validates the late delivery flag, bins profit tiers, and label-encodes categoricals for modelling; and a `viz_utils` layer of reusable Plotly and Matplotlib functions shared across notebooks and the dashboard.
 
-**Feature engineering for the risk model** goes beyond the base columns. Six additional pre-shipment features were engineered to improve predictive signal without introducing leakage:
-
-| Feature | What it captures |
-|---|---|
-| `shipping_mode_market` | Mode × market interaction — Standard Class in LATAM behaves differently than in USCA |
-| `order_month` | Seasonal demand patterns |
-| `order_dayofweek` | Day-of-week fulfilment patterns |
-| `is_holiday_period` | Nov/Dec network pressure flag |
-| `order_value_bin` | Low / mid / high order value tier |
-| `scheduled_x_value` | Interaction between scheduled days and value tier |
-
-The risk model uses **LightGBM** trained on 13 pre-shipment features. Actual shipping delay is excluded — it isn't known at fulfilment time and would be a leaker. **SHAP TreeExplainer** is used to interpret what the model learned.
+The risk model uses **LightGBM** trained on 7 pre-shipment features: shipping mode, market, customer segment, product category, order quantity, sales value, and scheduled delivery days. Actual shipping delay is excluded — it isn't known at fulfilment time and would be a leaker. **SHAP TreeExplainer** is used to interpret what the model learned.
 
 ---
 
@@ -76,7 +65,7 @@ Average profit per order was $21.97, but 19.4% of orders were loss-generating an
 
 **Late Delivery Risk Model**
 
-AUC of **0.7367** on 36,104 held-out orders using 13 pre-shipment features only — up from 0.7293 on the base feature set. Scheduled delivery days and shipping mode were the two strongest predictors by SHAP value. The finding: carriers appear to treat longer lead-time commitments as lower priority, so the buffer time built into longer scheduled windows gets eroded before the shipment even moves. The model is deployed in the dashboard's Risk Scoring page for live per-order prediction.
+AUC of **0.73** on 36,104 held-out orders using 7 pre-shipment features only. Scheduled delivery days and shipping mode were the two strongest predictors by SHAP value. The finding: carriers appear to treat longer lead-time commitments as lower priority, so the buffer time built into longer scheduled windows gets eroded before the shipment even moves. The model is deployed in the dashboard's Risk Scoring page for live per-order prediction.
 
 ---
 
